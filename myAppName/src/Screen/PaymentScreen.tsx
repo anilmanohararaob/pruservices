@@ -12,7 +12,6 @@ function PaymentScreen({navigation}) {
   return (
     <View style={CommonStyles.container}>
       <Text style={CommonStyles.title}>Check out items</Text>
-      <Text style={CommonStyles.value}>{totalAmount}</Text>
       <Text style={CommonStyles.value}>{itemValue}</Text>
 
       <Text>Is the above info correct?</Text>

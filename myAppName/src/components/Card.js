@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState, useRef} from 'react';
+import React, {useContext} from 'react';
 import {
   Text,
   View,
@@ -6,7 +6,6 @@ import {
   Animated,
   StyleSheet,
   Dimensions,
-  PanResponder,
 } from 'react-native';
 import {Context1} from '../../App';
 
@@ -17,29 +16,8 @@ const Card = props => {
   const {totalAmount, itemValue, selectedValue} = context;
   console.log('selectedValue::::::::::;' + selectedValue);
 
-  return (
-    <View style={{flexDirection: 'row', height: 200, width: windowWidth}}>
-      <Image
-        style={{
-          position: 'absolute',
-          marginTop: props.aStore.type === 'LATTE' ? 0 : 20,
-        }}
-        source={props.aStore.images[0]}
-      />
-      <Image
-        style={{
-          position: 'absolute',
-          marginTop: -(selectedValue / 30),
-        }}
-        source={props.aStore.images[1]}
-      />
-      <Image
-        style={{
-          position: 'absolute',
-          marginTop: props.aStore.type === 'LATTE' ? 0 : -(selectedValue / 30),
-        }}
-        source={props.aStore.images[2]}
-      />
+  const starAnimation = () => {
+    return (
       <Animated.View
         style={{flex: 1, height: '100%', transform: [{rotate: props.spin}]}}>
         <Image
@@ -70,7 +48,33 @@ const Card = props => {
           source={require('../assets/star3.png')}
         />
       </Animated.View>
+    );
+  };
 
+  return (
+    <View style={{flexDirection: 'row', height: 200, width: windowWidth}}>
+      <Image
+        style={{
+          position: 'absolute',
+          marginTop: props.aStore.type === 'LATTE' ? 0 : 20,
+        }}
+        source={props.aStore.images[0]}
+      />
+      <Image
+        style={{
+          position: 'absolute',
+          marginTop: -(selectedValue / 30),
+        }}
+        source={props.aStore.images[1]}
+      />
+      <Image
+        style={{
+          position: 'absolute',
+          marginTop: props.aStore.type === 'LATTE' ? 0 : -(selectedValue / 30),
+        }}
+        source={props.aStore.images[2]}
+      />
+      {starAnimation()}
       <FadeInView
         style={{flex: 1, alignItems: 'flex-start'}}
         fadeAnim={props.fadeAnim}>
@@ -118,6 +122,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginTop: 5,
     marginRight: 10,
+  },
+  starAttr: {
+    position: 'absolute',
+    left: 30,
+    top: 30,
+    zIndex: 2000,
   },
 });
 

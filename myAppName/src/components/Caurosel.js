@@ -22,7 +22,7 @@ export default class Caurosel extends Component {
     this.props.fadeAnim.setValue(0);
     this.props.spinValue.setValue(0);
     var quot = Math.floor(contentOffset.x / layoutMeasurement.width);
-    console.log('quotient :::::' + quot);
+    // console.log('quotient :::::' + quot);
     this.props.onSwipe(quot, layoutMeasurement, contentOffset, contentSize);
 
     if (quot !== this.state.quotient) {
@@ -31,18 +31,18 @@ export default class Caurosel extends Component {
     var remainder = contentOffset.x % layoutMeasurement.width;
 
     this.setState({offset: remainder / layoutMeasurement.width});
-    console.log(
-      'quotient :::' +
-        quot +
-        'remainder :::' +
-        remainder +
-        'this.state.data.length:::' +
-        this.state.data.length,
-    );
+    // console.log(
+    //   'quotient :::' +
+    //     quot +
+    //     'remainder :::' +
+    //     remainder +
+    //     'this.state.data.length:::' +
+    //     this.state.data.length,
+    // );
 
-    console.log('layoutMeasurement' + JSON.stringify(layoutMeasurement));
-    console.log('contentOffset' + JSON.stringify(contentOffset));
-    console.log('contentSize' + JSON.stringify(contentSize));
+    // console.log('layoutMeasurement' + JSON.stringify(layoutMeasurement));
+    // console.log('contentOffset' + JSON.stringify(contentOffset));
+    // console.log('contentSize' + JSON.stringify(contentSize));
 
     if (this.state.data.length >= length * 3) {
       this.setState(prevState => ({
@@ -63,13 +63,13 @@ export default class Caurosel extends Component {
         contentSize.width - this.props.offset &&
       this.state.end
     ) {
-      console.log('endddd');
+      // console.log('endddd');
       this.setState(prevState => ({
         data: [...prevState.data, ...data],
         end: false,
       }));
     } else {
-      console.log('vifjviivji:::' + contentOffset.x);
+      // console.log('vifjviivji:::' + contentOffset.x);
 
       this.setState({
         end: true,
@@ -83,6 +83,19 @@ export default class Caurosel extends Component {
     // setTimeout(() => { this.infListRef.scrollToIndex({ animated: true, index: length }) }, 500);
   }
 
+  fadeAnimation() {
+    Animated.timing(this.props.fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(this.props.spinValue, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  }
+
   render() {
     return (
       <View style={styles.listItem}>
@@ -92,7 +105,7 @@ export default class Caurosel extends Component {
             this.infListRef = ref;
           }}
           data={this.state.data}
-          keyExtractor={(item, index ) => JSON.stringify(index)}
+          keyExtractor={(item, index) => JSON.stringify(index)}
           horizontal={true}
           pagingEnabled
           renderItem={({item}) => (
@@ -105,16 +118,7 @@ export default class Caurosel extends Component {
           )}
           onScroll={({nativeEvent}) => this.checkScroll(nativeEvent)}
           onMomentumScrollEnd={({nativeEvent}) => {
-            Animated.timing(this.props.fadeAnim, {
-              toValue: 1,
-              duration: 1000,
-              useNativeDriver: false
-            }).start();
-            Animated.timing(this.props.spinValue, {
-              toValue: 1,
-              duration: 1000,
-              useNativeDriver: false
-            }).start();
+            this.fadeAnimation();
           }}
           showsVerticalScrollIndicator={this.props.showsVerticalScrollIndicator}
         />

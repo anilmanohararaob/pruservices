@@ -12,6 +12,7 @@ import {
 import images from '../assets';
 import Caurosel from '../components/Caurosel';
 import {Context1} from '../../App';
+import { store } from '../data/data';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -29,26 +30,6 @@ const HomeScreen = ({navigation}) => {
   });
 
   const {totalAmount, itemValue, selectedValue} = context;
-  const store = [
-    {
-      key: '0',
-      type: 'FRIES',
-      price: '4',
-      images: [images.image1, images.image2, images.image3],
-    },
-    {
-      key: '1',
-      type: 'LATTE',
-      price: '3',
-      images: [images.coke1, images.coke2, images.coke3],
-    },
-    {
-      key: '2',
-      type: 'BURGER',
-      price: '6',
-      images: [images.burger1, images.burger2, images.burger3],
-    },
-  ];
 
   const moveItemsToTray = () => {
     if (Number(totalAmount) === 6) {

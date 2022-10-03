@@ -1,16 +1,15 @@
 import React, {useState} from 'react';
 
-import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import PaymentScreen from './src/Screen/PaymentScreen';
-import HomeScreen from './src/Screen/HomeScreen';
+import PaymentScreen from '../Screen/PaymentScreen';
+import HomeScreen from '../Screen/HomeScreen';
 
 const Stack = createStackNavigator();
 
 export const Context1 = React.createContext(null);
 
-const NavStack = () => {
+export const NavStack = () => {
   const context1InitialState = {
     totalAmount: null,
     itemValue: null,
@@ -54,9 +53,3 @@ const NavStack = () => {
     </Context1.Provider>
   );
 };
-
-function App(props) {
-  return <NavigationContainer>{NavStack()}</NavigationContainer>;
-}
-
-export default App;
