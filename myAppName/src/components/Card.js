@@ -13,64 +13,12 @@ import {Context1} from '../../App';
 const windowWidth = Dimensions.get('window').width;
 
 const Card = props => {
-  // const moveAnimation = new Animated.ValueXY({x: 300, y: -100});
-  // const moveAnimationFries = new Animated.ValueXY({x: 200, y: -100});
-  // const moveAnimationBurger = new Animated.ValueXY({x: 200, y: -100});
   const context = useContext(Context1);
   const {totalAmount, itemValue, selectedValue} = context;
   console.log('selectedValue::::::::::;' + selectedValue);
-  // const pan = useRef(new Animated.ValueXY()).current;
-  // const panResponder = useRef(
-  //   PanResponder.create({
-  //     onMoveShouldSetPanResponder: () => true,
-  //     onPanResponderMove: Animated.event([null, {dx: pan.x, dy: pan.y}]),
-  //     onPanResponderRelease: () => {
-  //       Animated.spring(moveAnimationBurger, {
-  //         toValue: {x: -120, y: 120},
-  //         useNativeDriver: false,
-  //       }).start();
-  //       Animated.spring(moveAnimation, {
-  //         toValue: {x: -90, y: 70},
-  //         useNativeDriver: false,
-  //       }).start();
-  //       Animated.spring(moveAnimationFries, {
-  //         toValue: {x: -40, y: 110},
-  //         useNativeDriver: false,
-  //       }).start();
-  //     },
-  //   }),
-  // ).current;
 
   return (
-    <View style={{height: 200, width: windowWidth}}>
-      <Image
-        style={{
-          position: 'absolute',
-          marginLeft: 175,
-          marginTop: 60,
-          zIndex: 2000,
-        }}
-        source={require('../assets/star1.png')}
-      />
-      <Image
-        style={{
-          position: 'absolute',
-          marginLeft: 175,
-          marginTop: 200,
-          zIndex: 2000,
-        }}
-        source={require('../assets/star2.png')}
-      />
-      <Image
-        style={{
-          position: 'absolute',
-          marginLeft: 20,
-          marginTop: 150,
-          zIndex: 2000,
-        }}
-        source={require('../assets/star3.png')}
-      />
-
+    <View style={{flexDirection: 'row', height: 200, width: windowWidth}}>
       <Image
         style={{
           position: 'absolute',
@@ -92,8 +40,40 @@ const Card = props => {
         }}
         source={props.aStore.images[2]}
       />
+      <Animated.View
+        style={{flex: 1, height: '100%', transform: [{rotate: props.spin}]}}>
+        <Image
+          style={{
+            position: 'absolute',
+            left: 30,
+            top: 30,
+            zIndex: 2000,
+          }}
+          source={require('../assets/star1.png')}
+        />
+        <Image
+          style={{
+            position: 'absolute',
+            right: 30,
+            top: 30,
+            zIndex: 2000,
+          }}
+          source={require('../assets/star2.png')}
+        />
+        <Image
+          style={{
+            position: 'absolute',
+            left: 30,
+            bottom: 30,
+            zIndex: 2000,
+          }}
+          source={require('../assets/star3.png')}
+        />
+      </Animated.View>
 
-      <FadeInView fadeAnim={props.fadeAnim}>
+      <FadeInView
+        style={{flex: 1, alignItems: 'flex-start'}}
+        fadeAnim={props.fadeAnim}>
         <Text numberOfLines={1} style={styles.title}>
           {props.aStore.type}
         </Text>
@@ -106,13 +86,6 @@ const Card = props => {
 };
 
 const FadeInView = props => {
-  useEffect(() => {
-    Animated.timing(props.fadeAnim, {
-      toValue: 1,
-      duration: 5000,
-    }).start();
-  }, [props.fadeAnim, props.index]);
-
   return (
     <Animated.View
       style={{

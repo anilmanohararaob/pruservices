@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {FlatList, View, StyleSheet, Dimensions} from 'react-native';
+import {FlatList, View, StyleSheet, Dimensions, Animated} from 'react-native';
 import PropTypes from 'prop-types';
 import Card from './Card';
 
@@ -19,6 +19,8 @@ export default class Caurosel extends Component {
   }
 
   checkScroll({layoutMeasurement, contentOffset, contentSize}) {
+    this.props.fadeAnim.setValue(0);
+    this.props.spinValue.setValue(0);
     var quot = Math.floor(contentOffset.x / layoutMeasurement.width);
     console.log('quotient :::::' + quot);
     this.props.onSwipe(quot, layoutMeasurement, contentOffset, contentSize);
@@ -90,12 +92,30 @@ export default class Caurosel extends Component {
             this.infListRef = ref;
           }}
           data={this.state.data}
+          keyExtractor={(item, index ) => JSON.stringify(index)}
           horizontal={true}
           pagingEnabled
           renderItem={({item}) => (
-            <Card aStore={item} fadeAnim={this.props.fadeAnim} />
+            <Card
+              aStore={item}
+              fadeAnim={this.props.fadeAnim}
+              spinValue={this.props.spinValue}
+              spin={this.props.spin}
+            />
           )}
           onScroll={({nativeEvent}) => this.checkScroll(nativeEvent)}
+          onMomentumScrollEnd={({nativeEvent}) => {
+            Animated.timing(this.props.fadeAnim, {
+              toValue: 1,
+              duration: 1000,
+              useNativeDriver: false
+            }).start();
+            Animated.timing(this.props.spinValue, {
+              toValue: 1,
+              duration: 1000,
+              useNativeDriver: false
+            }).start();
+          }}
           showsVerticalScrollIndicator={this.props.showsVerticalScrollIndicator}
         />
       </View>

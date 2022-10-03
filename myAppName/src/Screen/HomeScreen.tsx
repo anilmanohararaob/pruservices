@@ -20,8 +20,15 @@ const HomeScreen = ({navigation}) => {
   const moveAnimation = new Animated.ValueXY({x: 300, y: -100});
   const moveAnimationFries = new Animated.ValueXY({x: 200, y: -100});
   const moveAnimationBurger = new Animated.ValueXY({x: 200, y: -100});
+  const spinValue = useRef(new Animated.Value(0)).current;
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
-  const {totalAmount, itemValue,selectedValue} = context;
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '60deg'],
+  });
+
+  const {totalAmount, itemValue, selectedValue} = context;
   const store = [
     {
       key: '0',
@@ -42,8 +49,6 @@ const HomeScreen = ({navigation}) => {
       images: [images.burger1, images.burger2, images.burger3],
     },
   ];
-
-  const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const moveItemsToTray = () => {
     if (Number(totalAmount) === 6) {
@@ -90,21 +95,19 @@ const HomeScreen = ({navigation}) => {
     }
     setTimeout(() => {
       // if (remainder ! == 0 && remainder !== null) {
-        context.setSelectedValue(remainder);
+      context.setSelectedValue(remainder);
       // }
-    },10);
+    }, 10);
     setTimeout(() => {
       console.log('obj.priceeeee' + remainder);
-      
+
       context.setAmount(obj.price);
       console.log('obj.priceeeee' + remainder);
 
       console.log('obj.ttttttttt' + selectedValue);
 
       // alert(obj.price);
-        }, 500);
-       
-
+    }, 500);
   };
 
   return (
@@ -112,12 +115,14 @@ const HomeScreen = ({navigation}) => {
       <Image
         resizeMode="cover"
         source={images.topbar}
-        style={{height: 60, width: '100%',marginTop:20}}
+        style={{height: 60, width: '100%', marginTop: 20}}
       />
       <View style={styles.swiperContainer}>
         <Caurosel
           data={store}
           fadeAnim={fadeAnim}
+          spinValue={spinValue}
+          spin={spin}
           onSwipe={(
             quotient: any,
             layoutMeasurement: any,
@@ -126,31 +131,32 @@ const HomeScreen = ({navigation}) => {
           ) => onSwipe(quotient, layoutMeasurement, contentOffset, contentSize)}
         />
       </View>
-
+      <Image
+        resizeMode="contain"
+        source={require('../assets/tray.png')}
+        style={{width: windowWidth / 1.5, alignSelf: 'center'}}
+      />
       <View
         // eslint-disable-next-line react-native/no-inline-styles
         style={{
           flexDirection: 'column',
           width: windowWidth,
-          alignItems: 'baseline',
+          flex: 1,
+          justifyContent: 'flex-end',
         }}>
-        <Image
-          source={require('../assets/tray.png')}
-          style={{marginLeft: 30}}
-        />
-        <View style={{flexDirection: 'row', width: windowWidth}}>
+        <View style={{flexDirection: 'row', width: windowWidth, padding: 20}}>
           <Image
+            resizeMode="contain"
             source={require('../assets/Location.png')}
-            style={{marginTop: 20, marginLeft: 10}}
+            style={{flex: 1}}
           />
-          <Text
-            style={{marginTop: 20, marginLeft: 20, width: 220}}
-            numberOfLines={2}>
+          <Text style={{flex: 3}} numberOfLines={2}>
             Dongcheng District Metro Cultural Building
           </Text>
           <Image
+            style={{flex: 1}}
+            resizeMode="contain"
             source={require('../assets/Call.png')}
-            style={{marginTop: 20, marginRight: 20}}
           />
         </View>
       </View>
@@ -177,8 +183,7 @@ const HomeScreen = ({navigation}) => {
           width: windowWidth,
           height: 60,
           marginLeft: 20,
-          alignItems:'flex-end',
-          top:20
+          alignItems: 'flex-end',
         }}>
         <Text
           style={{color: '#4F4F4F', fontSize: 43.8519, fontWeight: '600'}}
@@ -193,8 +198,8 @@ const HomeScreen = ({navigation}) => {
         <TouchableOpacity
           style={styles.pay}
           onPress={() => navigation.navigate('Payment')}>
-        <Image source={images.pay} height="80" />
-      </TouchableOpacity>
+          <Image source={images.pay} height="80" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -208,7 +213,7 @@ const styles = StyleSheet.create({
   orderContainer: {flex: 1},
   tray: {alignSelf: 'center', width: 200, height: 100},
   add: {position: 'absolute', right: 20, top: 240},
-  pay: {position: 'absolute', right: 60, top: 0, width:80, height:60},
+  pay: {position: 'absolute', right: 60, top: 0, width: 80, height: 60},
   title: {
     color: '#EB5C77',
     fontWeight: '600',
