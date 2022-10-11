@@ -1,0 +1,1 @@
+{"version":3,"names":[],"sources":["index.ts"],"sourcesContent":["export { default as Icon, IconProps } from './Icon';\n\n\n"],"mappings":";;;;;;;;;;;;;;;;;AAAA;AAAoD;AAAA"}

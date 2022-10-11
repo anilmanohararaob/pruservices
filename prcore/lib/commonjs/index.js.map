@@ -1,0 +1,1 @@
+{"version":3,"names":[],"sources":["index.tsx"],"sourcesContent":["import * as prcomponents from './prcomponents';\nexport { prcomponents }"],"mappings":";;;;;;AAAA;AAA+C;AAAA;AAAA"}

@@ -1,0 +1,1 @@
+{"version":3,"names":["prcomponents"],"sources":["index.tsx"],"sourcesContent":["import * as prcomponents from './prcomponents';\nexport { prcomponents }"],"mappings":"AAAA,OAAO,KAAKA,YAAY,MAAM,gBAAgB;AAC9C,SAASA,YAAY"}
