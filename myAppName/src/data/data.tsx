@@ -11,7 +11,7 @@ export const store = [
     key: '1',
     type: 'LATTE',
     price: '3',
-    images: [images.coke1, images.coke2, images.coke3],
+    images: [images.coke1, images.coke2, images.burger2],
   },
   {
     key: '2',
