@@ -1,7 +1,6 @@
 import React, {useRef, useContext} from 'react';
 import {
   StyleSheet,
-  Button,
   Text,
   View,
   Image,
@@ -14,6 +13,7 @@ import Caurosel from '../components/Caurosel';
 import {Context1} from '../../App';
 import { store } from '../data/data';
 
+// import Icon from 'prcore/src/prcomponents/Icon';
 const windowWidth = Dimensions.get('window').width;
 
 const HomeScreen = ({navigation}) => {
@@ -22,12 +22,18 @@ const HomeScreen = ({navigation}) => {
   const moveAnimationFries = new Animated.ValueXY({x: 200, y: -100});
   const moveAnimationBurger = new Animated.ValueXY({x: 200, y: -100});
   const spinValue = useRef(new Animated.Value(0)).current;
+  const offsetValueP = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '60deg'],
   });
+  const offsetP = Animated.timing(offsetValueP, {
+    toValue: 300,
+    duration: 1000,
+    useNativeDriver: false,
+  }).start();
 
   const {totalAmount, itemValue, selectedValue} = context;
 
@@ -93,6 +99,7 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      {/* <Icon name="close" size={40} onPress={{}} primaryColor="red" /> */}
       <Image
         resizeMode="cover"
         source={images.topbar}
@@ -104,6 +111,8 @@ const HomeScreen = ({navigation}) => {
           fadeAnim={fadeAnim}
           spinValue={spinValue}
           spin={spin}
+          offsetValueP={offsetValueP}
+          offsetP={offsetP}
           onSwipe={(
             quotient: any,
             layoutMeasurement: any,
