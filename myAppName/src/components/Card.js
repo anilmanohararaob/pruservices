@@ -13,9 +13,14 @@ const windowWidth = Dimensions.get('window').width;
 
 const Card = props => {
   const context = useContext(Context1);
-  const {totalAmount, itemValue, selectedValue} = context;
+  const {selectedValue} = context;
   console.log('selectedValue::::::::::;' + selectedValue);
-
+  const marginMoveAnim = new Animated.ValueXY({x: 0, y: 5});
+  const marginMoveP = Animated.timing(marginMoveAnim, {
+    toValue: -10,
+    duration: 500,
+    useNativeDriver: false,
+  }).start();
   const starAnimation = () => {
     return (
       <Animated.View
@@ -60,20 +65,23 @@ const Card = props => {
         }}
         source={props.aStore.images[0]}
       />
-      <Image
-        style={{
-          position: 'absolute',
-          marginTop: -(selectedValue / 30),
-        }}
-        source={props.aStore.images[1]}
-      />
-      <Image
-        style={{
-          position: 'absolute',
-          marginTop: props.aStore.type === 'LATTE' ? 0 : -(selectedValue / 30),
-        }}
-        source={props.aStore.images[2]}
-      />
+      <Animated.View style={[marginMoveAnim.getLayout()]}>
+        <Image
+          style={{
+            position: 'absolute',
+            // marginTop: -(selectedValue / 30),
+          }}
+          source={props.aStore.images[1]}
+        />
+        <Image
+          style={{
+            position: 'absolute',
+            // marginTop: props.aStore.type === 'LATTE' ? 0 : -(selectedValue / 30),
+          }}
+          source={props.aStore.images[2]}
+        />
+      </Animated.View>
+
       {starAnimation()}
       <FadeInView
         style={{flex: 1, alignItems: 'flex-start'}}
