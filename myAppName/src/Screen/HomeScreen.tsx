@@ -1,7 +1,6 @@
 import React, {useRef, useContext} from 'react';
 import {
   StyleSheet,
-  Button,
   Text,
   View,
   Image,
@@ -12,44 +11,63 @@ import {
 import images from '../assets';
 import Caurosel from '../components/Caurosel';
 import {Context1} from '../../App';
-import { store } from '../data/data';
+import {store} from '../data/data';
 
+// import Icon from 'prcore/src/prcomponents/Icon';
 const windowWidth = Dimensions.get('window').width;
 
 const HomeScreen = ({navigation}) => {
   const context = useContext(Context1);
-  const moveAnimation = new Animated.ValueXY({x: 300, y: -100});
+  const moveAnimation = new Animated.ValueXY({x: 200, y: -100});
   const moveAnimationFries = new Animated.ValueXY({x: 200, y: -100});
   const moveAnimationBurger = new Animated.ValueXY({x: 200, y: -100});
   const spinValue = useRef(new Animated.Value(0)).current;
+  const offsetValueP = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '60deg'],
   });
+  const offsetP = Animated.timing(offsetValueP, {
+    toValue: 300,
+    duration: 1000,
+    useNativeDriver: false,
+  }).start();
 
   const {totalAmount, itemValue, selectedValue} = context;
-
   const moveItemsToTray = () => {
-    if (Number(totalAmount) === 6) {
-      Animated.spring(moveAnimationBurger, {
-        toValue: {x: -120, y: 120},
+    Animated.spring(
+      Number(totalAmount) === 6
+        ? moveAnimationBurger
+        : Number(totalAmount) === 3
+        ? moveAnimation
+        : moveAnimationFries,
+      {
+        toValue: {
+          x:
+            Number(totalAmount) === 6
+              ? -120
+              : Number(totalAmount) === 3
+              ? -90
+              : -40,
+          y:
+            Number(totalAmount) === 6
+              ? 120
+              : Number(totalAmount) === 3
+              ? 70
+              : 110,
+        },
         useNativeDriver: false,
-      }).start();
-    } else if (Number(totalAmount) === 3) {
-      Animated.spring(moveAnimation, {
-        toValue: {x: -90, y: 70},
-        useNativeDriver: false,
-      }).start();
-    } else {
-      Animated.spring(moveAnimationFries, {
-        toValue: {x: -40, y: 110},
-        useNativeDriver: false,
-      }).start();
-    }
+      },
+    ).start();
     setTimeout(() => {
       context.setTotalAmount(Number(totalAmount) + Number(itemValue));
+    }, 500);
+  };
+  const resetCart = () => {
+    setTimeout(() => {
+      context.setTotalAmount(0);
     }, 500);
   };
   // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -104,6 +122,8 @@ const HomeScreen = ({navigation}) => {
           fadeAnim={fadeAnim}
           spinValue={spinValue}
           spin={spin}
+          offsetValueP={offsetValueP}
+          offsetP={offsetP}
           onSwipe={(
             quotient: any,
             layoutMeasurement: any,
@@ -139,6 +159,12 @@ const HomeScreen = ({navigation}) => {
             resizeMode="contain"
             source={require('../assets/Call.png')}
           />
+          {/* <Icon
+            name="close"
+            size={40}
+            onPress={() => resetCart()}
+            primaryColor="red"
+          /> */}
         </View>
       </View>
 
@@ -193,7 +219,7 @@ const styles = StyleSheet.create({
   swiperContainer: {height: 250},
   orderContainer: {flex: 1},
   tray: {alignSelf: 'center', width: 200, height: 100},
-  add: {position: 'absolute', right: 20, top: 240},
+  add: {position: 'absolute', right: 20, top: 240, zIndex: 400},
   pay: {position: 'absolute', right: 60, top: 0, width: 80, height: 60},
   title: {
     color: '#EB5C77',

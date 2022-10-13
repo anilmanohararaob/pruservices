@@ -31,18 +31,6 @@ export default class Caurosel extends Component {
     var remainder = contentOffset.x % layoutMeasurement.width;
 
     this.setState({offset: remainder / layoutMeasurement.width});
-    // console.log(
-    //   'quotient :::' +
-    //     quot +
-    //     'remainder :::' +
-    //     remainder +
-    //     'this.state.data.length:::' +
-    //     this.state.data.length,
-    // );
-
-    // console.log('layoutMeasurement' + JSON.stringify(layoutMeasurement));
-    // console.log('contentOffset' + JSON.stringify(contentOffset));
-    // console.log('contentSize' + JSON.stringify(contentSize));
 
     if (this.state.data.length >= length * 3) {
       this.setState(prevState => ({

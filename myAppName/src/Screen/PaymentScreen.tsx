@@ -7,7 +7,7 @@ import {CommonStyles} from '../utils/CommonStyles';
 function PaymentScreen({navigation}) {
   const context = useContext(Context1);
 
-  const {totalAmount, itemValue} = context;
+  const {itemValue} = context;
 
   return (
     <View style={CommonStyles.container}>

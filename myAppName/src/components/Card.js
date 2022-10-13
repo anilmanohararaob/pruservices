@@ -7,75 +7,80 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import {Context1} from '../../App';
+// import {Context1} from '../../App';
+import {starArray} from '../data/data';
 
 const windowWidth = Dimensions.get('window').width;
 
 const Card = props => {
-  const context = useContext(Context1);
-  const {totalAmount, itemValue, selectedValue} = context;
-  console.log('selectedValue::::::::::;' + selectedValue);
+  // const context = useContext(Context1);
+  // const {selectedValue} = context;
+  // console.log('selectedValue::::::::::;' + selectedValue);
+
+  const marginMoveAnim = new Animated.ValueXY({x: 0, y: 5});
+  const marginMoveP = Animated.timing(marginMoveAnim, {
+    toValue: -10,
+    duration: 500,
+    useNativeDriver: false,
+  }).start();
 
   const starAnimation = () => {
+
     return (
       <Animated.View
+        // eslint-disable-next-line react-native/no-inline-styles
         style={{flex: 1, height: '100%', transform: [{rotate: props.spin}]}}>
-        <Image
-          style={{
-            position: 'absolute',
-            left: 30,
-            top: 30,
-            zIndex: 2000,
-          }}
-          source={require('../assets/star1.png')}
-        />
-        <Image
-          style={{
-            position: 'absolute',
-            right: 30,
-            top: 30,
-            zIndex: 2000,
-          }}
-          source={require('../assets/star2.png')}
-        />
-        <Image
-          style={{
-            position: 'absolute',
-            left: 30,
-            bottom: 30,
-            zIndex: 2000,
-          }}
-          source={require('../assets/star3.png')}
-        />
+        {starArray.map(object => {
+          return (
+            <Image
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                // position: 'absolute',
+                left: Number(object.x),
+                top: Number(object.y),
+                zIndex: 2000,
+              }}
+              source={object.value}
+            />
+          );
+        })}
       </Animated.View>
     );
   };
 
   return (
+    // eslint-disable-next-line react-native/no-inline-styles
     <View style={{flexDirection: 'row', height: 200, width: windowWidth}}>
       <Image
+        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           position: 'absolute',
-          marginTop: props.aStore.type === 'LATTE' ? 0 : 20,
+          zIndex: props.aStore.type === 'LATTE' ? 99 : 0,
         }}
         source={props.aStore.images[0]}
       />
-      <Image
-        style={{
-          position: 'absolute',
-          marginTop: -(selectedValue / 30),
-        }}
-        source={props.aStore.images[1]}
-      />
-      <Image
-        style={{
-          position: 'absolute',
-          marginTop: props.aStore.type === 'LATTE' ? 0 : -(selectedValue / 30),
-        }}
-        source={props.aStore.images[2]}
-      />
+      <Animated.View style={[marginMoveAnim.getLayout()]}>
+        <Image
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{
+            position: 'absolute',
+            zIndex: props.aStore.type === 'LATTE' ? 100 : 0,
+          }}
+          source={props.aStore.images[1]}
+        />
+        <Image
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{
+            position: 'absolute',
+
+          }}
+          source={props.aStore.images[2]}
+        />
+      </Animated.View>
+
       {starAnimation()}
       <FadeInView
+        // eslint-disable-next-line react-native/no-inline-styles
         style={{flex: 1, alignItems: 'flex-start'}}
         fadeAnim={props.fadeAnim}>
         <Text numberOfLines={1} style={styles.title}>

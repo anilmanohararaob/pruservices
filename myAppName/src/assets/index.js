@@ -16,6 +16,9 @@ const images = {
   image1: require('./image1.png'),
   image2: require('./image2.png'),
   image3: require('./image3.png'),
+  star1: require('./star1.png'),
+  star2: require('./star2.png'),
+  star3: require('./star3.png'),
   Location: require('./Location.png'),
 };
 
