@@ -111,6 +111,7 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      {/* <Icon name="close" size={40} onPress={{}} primaryColor="red" /> */}
       <Image
         resizeMode="cover"
         source={images.topbar}

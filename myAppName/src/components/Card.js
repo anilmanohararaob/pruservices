@@ -23,7 +23,6 @@ const Card = props => {
     duration: 500,
     useNativeDriver: false,
   }).start();
-
   const starAnimation = () => {
 
     return (
